@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useContext } from 'react'
-import { Box, Flex, IconButton, ScrollArea, Text } from '@radix-ui/themes'
+import { Box, Flex, IconButton, ScrollArea, Text, Tooltip } from '@radix-ui/themes'
 import cs from 'classnames'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { BiMessageDetail } from 'react-icons/bi'
@@ -57,10 +57,17 @@ export const ChatSideBar = () => {
                 }}
               >
                 <Flex gap="2" align="center">
-                  <BiMessageDetail className="size-4" />
-                  <Text as="p" className="truncate">
-                    {chat.persona?.name}
-                  </Text>
+                  <>
+                    <BiMessageDetail className="size-4" />
+                    <Tooltip content={chat?.persona?.name ? chat?.persona?.name : ''}>
+                      <Text as="p" className="truncate hover:">
+                        {chat.persona?.name?.substring(0, 7)}
+                        {chat.persona?.brand?.substring(0, 7)
+                          ? ' - ' + chat.persona?.brand?.substring(0, 7)
+                          : ''}
+                      </Text>
+                    </Tooltip>
+                  </>
                 </Flex>
                 <IconButton
                   size="2"
