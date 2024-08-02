@@ -56,9 +56,10 @@ const PersonaModal = () => {
     { value: 'flowerCampings', label: 'Flower Campings' },
     { value: 'odalysInvest', label: 'Odalys Invest' },
     { value: 'odalysPleinAir', label: 'Odalys Plein Air' },
-    { value: 'laConciergerieByOdalys', label: 'La Conciergerie by Odalys' },
+    { value: 'alpissimmo', label: 'Alpissimmo' },
     { value: 'odalysEvenementsEtGroupes', label: 'Odalys Événements et Groupes' },
-    { value: 'odalysGroupe', label: 'Odalys Groupe' }
+    { value: 'odalysGroupe', label: 'Odalys Groupe' },
+    { value: 'devPrompt', label: 'Dev Prompt' }
   ]
 
   return (

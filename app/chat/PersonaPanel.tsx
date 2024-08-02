@@ -104,12 +104,12 @@ const SolidBrand: Brand[] = [
     url: 'https://www.odalys-pleinair.com/'
   },
   {
-    name: 'La Conciergerie by Odalys',
-    logo: '/logo-conciergerie.png',
-    dbName: 'laConciergerieByOdalys',
+    name: 'Alpissimmo',
+    logo: '/alpissimmo.svg',
+    dbName: 'alpissimmo',
     color: '#022C6F',
     description: 'Service de gestion de locations',
-    url: 'https://www.laconciergerie-odalys.com/'
+    url: 'https://www.alpissimmo.fr/'
   },
   {
     name: 'Odalys evenements et groupes',
@@ -126,6 +126,14 @@ const SolidBrand: Brand[] = [
     color: '#012D72', // Bleu foncé
     description: 'Organisation d’événements et gestion de groupes',
     url: 'https://www.odalys-evenements-groupes.com/' // URL fictive, remplacez par l'URL réelle si disponible
+  },
+  {
+    name: 'Dev Prompt',
+    logo: '/codingPC.png',
+    dbName: 'devPrompt',
+    color: '#7f00ff', // Bleu foncé
+    description: 'des Promps pour les développeurs',
+    url: '' // URL fictive, remplacez par l'URL réelle si disponible
   }
 ]
 const PersonaPanel = (_props: PersonaPanelProps) => {
