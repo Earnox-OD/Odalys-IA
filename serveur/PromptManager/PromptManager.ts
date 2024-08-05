@@ -9,7 +9,6 @@ class PromptManager {
   }
 
   async savePrompt(name: string, prompt: string, brand: string) {
-  
     return await this.prisma.prompt.create({
       data: {
         name: name,
@@ -18,6 +17,7 @@ class PromptManager {
       }
     })
   }
+  // create PRompt methode
   async getPrompts() {
     const response = await this.prisma.prompt.findMany()
     return response
