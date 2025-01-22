@@ -4,6 +4,8 @@ import { Flex } from '@radix-ui/themes'
 import { Chat, ChatContext, ChatSideBar, useChatHook } from '@/components'
 import PersonaModal from './PersonaModal'
 import PersonaPanel from './PersonaPanel'
+import { getCookie } from '@/app/utils/cookies'
+import { jwtDecode } from 'jwt-decode'
 
 const ChatProvider = () => {
   const provider = useChatHook()
@@ -26,9 +28,13 @@ const ChatPage = () => {
   const [apiKey, setApiKey] = useState('')
 
   useEffect(() => {
-    const storedApiKey = localStorage.getItem('apiKey') || ''
-    if (storedApiKey) {
-      setApiKey(storedApiKey)
+    // const storedApiKey = localStorage.getItem('apiKey') || ''
+    const jwt = getCookie('jwt')
+    const user: any = jwt ? jwtDecode(jwt) : null
+
+    if (user) {
+      setApiKey(user.password)
+      localStorage.setItem('apiKey', user.password)
     } else {
       const userApiKey = prompt('Veuillez entrer votre clé API :')
       if (userApiKey) {
