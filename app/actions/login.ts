@@ -1,32 +1,39 @@
 'use server'
-import jwt from 'jsonwebtoken'
-import { createToken } from '@/app/utils/session'
+import { PrismaClient } from '@prisma/client'
+import { SignJWT } from 'jose' // Remplacez jsonwebtoken par jose
+import { cookies } from 'next/headers'
 
-export interface LoginInterface {
-  email: string
-  password: string
-}
+const prisma = new PrismaClient()
+const secret = new TextEncoder().encode(process.env.JWT_SECRET)
 
-export interface ILoginResponse {
-  success: boolean
-  token?: string
-}
+export async function userLogin({ email, password }: { email: string; password: string }) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email, password }
+    })
 
-export async function userLogin(payload: LoginInterface): Promise<ILoginResponse> {
-  const user = users.find(
-    (user) => user.email === payload.email && user.password === payload.password
-  )
+    if (!user) return { success: false, error: 'Invalid credentials' }
+    const jwt = await new SignJWT({
+      id: user.id,
+      email: user.email,
+      role: user.role,
+      password: user.password
+    })
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setExpirationTime('24h')
+      .sign(secret)
 
-  if (user) {
-    const token = createToken(payload)
-    return { success: true, token }
+    // Définition du cookie
+    cookies().set('jwt', jwt, {
+      httpOnly: true,
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: 'lax',
+      path: '/'
+    })
+    return { success: true, token: jwt }
+  } catch (error) {
+    console.error('Login error:', error)
+    return { success: false, error: 'Server error' }
   }
-  return { success: false }
 }
-
-const users = [
-  {
-    email: 'victor.mahe.pro@gmail.com',
-    password: 'azertyuiop' // Clé d'API OpenAI
-  }
-]

@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react'
 import { Button, Dialog, Flex, TextArea, TextField, Select } from '@radix-ui/themes'
 import { useForm } from 'react-hook-form'
 import { ChatContext, Persona } from '@/components'
-import Spinner from '@/components/spinner/spinner'
 
 const PersonaModal = () => {
   const {
