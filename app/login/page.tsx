@@ -38,6 +38,7 @@ export default function LoginPage() {
       align="center"
       justify="center"
       style={{ backgroundColor: 'var(--gray-a2)' }}
+      height={'100%'}
     >
       <Card size="4" style={{ width: 400 }}>
         <form onSubmit={handleSubmit}>
@@ -56,7 +57,7 @@ export default function LoginPage() {
                 size="3"
                 id="email"
                 type="email"
-                placeholder="email@exemple.com"
+                placeholder="email@odalys-vacances.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -64,12 +65,12 @@ export default function LoginPage() {
             </Flex>
 
             <Flex direction="column" gap="2">
-              <label htmlFor="password">Mot de passe</label>
+              <label htmlFor="password">Mot de passe (api key)</label>
               <TextField.Input
                 size="3"
                 id="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder="sk-••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

@@ -1,6 +1,6 @@
 'use server'
 import { PrismaClient } from '@prisma/client'
-import { SignJWT } from 'jose' // Remplacez jsonwebtoken par jose
+import { SignJWT } from 'jose'
 import { cookies } from 'next/headers'
 
 const prisma = new PrismaClient()
