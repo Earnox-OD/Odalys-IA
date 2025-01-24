@@ -37,6 +37,7 @@ export default function LoginPage() {
       width="100%"
       align="center"
       justify="center"
+      height={'100%'}
       style={{ backgroundColor: 'var(--gray-a2)' }}
     >
       <Card size="4" style={{ width: 400 }}>
