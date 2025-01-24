@@ -10,7 +10,7 @@ async function main() {
   await prisma.user.create({
     data: {
       email: 'admin@odalys-vacances.com',
-      password: 'sk-proj-admin-secure-key-12345',
+      password: 'sk-proj-admin-secure-key-12345 ',
       role: 'admin',
       chats: {
         create: {
