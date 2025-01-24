@@ -1,6 +1,7 @@
 // nous voulons crée une classe qui vas savgarder , récuperer , chercher des prompts dans la bdd mongo
 import { PrismaClient } from '@prisma/client'
-
+import * as dotenv from 'dotenv'
+dotenv.config() // Charge les variables du .env
 class PromptManager {
   private prisma: PrismaClient
 

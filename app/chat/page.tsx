@@ -1,48 +1,23 @@
-'use client'
-import { Suspense, useState, useEffect } from 'react'
-import { Flex } from '@radix-ui/themes'
-import { Chat, ChatContext, ChatSideBar, useChatHook } from '@/components'
-import PersonaModal from './PersonaModal'
-import PersonaPanel from './PersonaPanel'
-
-const ChatProvider = () => {
-  const provider = useChatHook()
-
-  return (
-    <ChatContext.Provider value={provider}>
-      <Flex style={{ height: 'calc(100% - 56px)' }} className="relative">
-        <ChatSideBar />
-        <div className="flex-1 relative">
-          <Chat ref={provider.chatRef} />
-          <PersonaPanel />
-        </div>
-      </Flex>
-      <PersonaModal />
-    </ChatContext.Provider>
-  )
+import { User } from '@prisma/client'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
+import { cookies } from 'next/headers'
+import { ChatProvider } from './ChatProvider'
+interface UserFromPrisma extends Omit<User, 'prompts' | 'chats'> {
+  prompts?: any[]
+  chats?: any[]
 }
 
-const ChatPage = () => {
-  const [apiKey, setApiKey] = useState('')
+// Interface étendue pour le JWT
+interface CustomJwtPayload extends JwtPayload, UserFromPrisma {}
+const ChatPage = async () => {
+  const cookieStore = cookies()
+  const jwt = cookieStore.get('jwt')?.value
+  if (!jwt) {
+    return <div>Unauthorized</div>
+  }
+  const decoded = jwtDecode<CustomJwtPayload>(jwt)
 
-  useEffect(() => {
-    const storedApiKey = localStorage.getItem('apiKey') || ''
-    if (storedApiKey) {
-      setApiKey(storedApiKey)
-    } else {
-      const userApiKey = prompt('Veuillez entrer votre clé API :')
-      if (userApiKey) {
-        localStorage.setItem('apiKey', userApiKey)
-        setApiKey(userApiKey)
-      }
-    }
-  }, [])
-
-  return (
-    <Suspense fallback={<div>Chargement...</div>}>
-      <ChatProvider />
-    </Suspense>
-  )
+  return <ChatProvider apiKey={decoded?.password} />
 }
 
 export default ChatPage

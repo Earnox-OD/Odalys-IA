@@ -19,28 +19,30 @@ model Prompt {
   prompt   String
   brand    String?
   date      DateTime  @default(now())
-  userId    String?   @map("user_id")
+  userId    String?   @db.ObjectId
   user      User?     @relation(fields: [userId], references: [id])
 }
-model Chat {
-  id        String      @id @map("_id")
-  personaId String
-  persona   User     @relation(fields: [personaId], references: [id])
-  messages  ChatMessage[]
-}
-
-model User {
-  id      String   @id @map("_id")
-  role    String
-  name    String
-  prompt  Prompt[]
-  chats   Chat[]
-}
-
 model ChatMessage {
-  id      String   @id @map("_id")
-  chatId  String
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  chatId  String   @db.ObjectId // Ajoutez ceci
   chat    Chat     @relation(fields: [chatId], references: [id])
   content String
   date    DateTime @default(now())
 }
+
+model Chat {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  personaId String      @db.ObjectId
+  persona   User        @relation(fields: [personaId], references: [id])
+  messages  ChatMessage[]
+}
+
+model User {
+  id     String  @id @default(auto()) @map("_id") @db.ObjectId
+  email  String  @unique
+  password String
+  role    String  @default("user")
+  prompts Prompt[]
+  chats   Chat[]
+}
+
